@@ -63,3 +63,41 @@ function compracion(pc, usuario){
             return 3; //empata
     }
 }
+
+let puntosJugador = 0;
+let puntosComputadora = 0;
+
+document.querySelectorAll(".opcion").forEach(opcion => {
+    opcion.addEventListener("click", () => {
+        let eleccionJugador = opcion.id;
+        let opciones = ["piedra", "papel", "tijera"];
+        let eleccionComputadora = opciones[Math.floor(Math.random() * 3)];
+        
+        let resultado = determinarGanador(eleccionJugador, eleccionComputadora);
+        document.getElementById("resultado").innerText = resultado;
+
+        // Actualizar la puntuación
+        if (resultado.includes("¡Ganaste!")) {
+            puntosJugador++;
+        } else if (resultado.includes("¡Perdiste!")) {
+            puntosComputadora++;
+        }
+
+        document.getElementById("puntosJugador").innerText = puntosJugador;
+        document.getElementById("puntosComputadora").innerText = puntosComputadora;
+    });
+});
+
+function determinarGanador(jugador, computadora) {
+    if (jugador === computadora) {
+        return "Empate!";
+    }
+
+    if ((jugador === "piedra" && computadora === "tijera") ||
+        (jugador === "papel" && computadora === "piedra") ||
+        (jugador === "tijera" && computadora === "papel")) {
+        return "¡Ganaste!";
+    } else {
+        return "¡Perdiste!";
+    }
+}
